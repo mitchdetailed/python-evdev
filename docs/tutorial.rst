@@ -289,13 +289,13 @@ Injecting input
 
 ::
 
-    >>> from evdev import UInput, ecodes as e
+    >>> from evdev import UInput, ecodes
 
     >>> ui = UInput()
 
     >>> # accepts only KEY_* events by default
-    >>> ui.write(e.EV_KEY, e.KEY_A, 1)  # KEY_A down
-    >>> ui.write(e.EV_KEY, e.KEY_A, 0)  # KEY_A up
+    >>> ui.write(ecodes.EV_KEY, ecodes.KEY_A, 1)  # KEY_A down
+    >>> ui.write(ecodes.EV_KEY, ecodes.KEY_A, 0)  # KEY_A up
     >>> ui.syn()
 
     >>> ui.close()
@@ -317,15 +317,15 @@ Specifying ``uinput`` device options
 
 ::
 
-    >>> from evdev import UInput, AbsInfo, ecodes as e
+    >>> from evdev import UInput, AbsInfo, ecodes
 
     >>> cap = {
-    ...     e.EV_KEY : [e.KEY_A, e.KEY_B],
+    ...     ecodes.EV_KEY : [ecodes.KEY_A, ecodes.KEY_B],
     ...     e.EV_ABS : [
-    ...         (e.ABS_X, AbsInfo(value=0, min=0, max=255,
+    ...         (ecodes.ABS_X, AbsInfo(value=0, min=0, max=255,
     ...                           fuzz=0, flat=0, resolution=0)),
-    ...         (e.ABS_Y, AbsInfo(0, 0, 255, 0, 0, 0)),
-    ...         (e.ABS_MT_POSITION_X, (0, 128, 255, 0)) ]
+    ...         (ecodes.ABS_Y, AbsInfo(0, 0, 255, 0, 0, 0)),
+    ...         (ecodes.ABS_MT_POSITION_X, (0, 128, 255, 0)) ]
     ... }
 
     >>> ui = UInput(cap, name='example-device', version=0x3)
@@ -341,8 +341,8 @@ Specifying ``uinput`` device options
          (53, AbsInfo(value=0, min=0, max=255, fuzz=128, flat=0, resolution=0))]}
 
     >>> # move mouse cursor
-    >>> ui.write(e.EV_ABS, e.ABS_X, 20)
-    >>> ui.write(e.EV_ABS, e.ABS_Y, 20)
+    >>> ui.write(ecodes.EV_ABS, ecodes.ABS_X, 20)
+    >>> ui.write(ecodes.EV_ABS, ecodes.ABS_Y, 20)
     >>> ui.syn()
 
 
@@ -432,5 +432,5 @@ Injecting an FF-event into first FF-capable device found
 
     repeat_count = 1
     effect_id = dev.upload_effect(effect)
-    dev.write(e.EV_FF, effect_id, repeat_count)
+    dev.write(ecodes.EV_FF, effect_id, repeat_count)
     dev.erase_effect(effect_id)
